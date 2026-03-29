@@ -1,14 +1,16 @@
-import { Button } from "@/components/ui/button";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from '@tanstack/react-router'
+import { HeroSection } from '../components/hero-section'
+import { ProductsSection } from '../components/products-section'
 
-export const Route = createFileRoute("/")({
-  component: RouteComponent,
-});
+export const Route = createFileRoute('/')({
+  component: LandingPage,
+})
 
-function RouteComponent() {
+function LandingPage() {
   return (
-    <div>
-      <Button variant="destructive">Hello</Button>
-    </div>
-  );
+    <>
+      <HeroSection />
+      <ProductsSection />
+    </>
+  )
 }

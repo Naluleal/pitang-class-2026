@@ -7,7 +7,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import {
   SidebarGroup,
-  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuAction,
   SidebarMenuButton,
@@ -20,6 +19,7 @@ import {
   ShareIcon,
   Trash2Icon,
 } from "lucide-react";
+import { Link } from "@tanstack/react-router"; // Importação essencial para SPA
 
 export function NavProjects({
   projects,
@@ -31,27 +31,32 @@ export function NavProjects({
   }[];
 }) {
   const { isMobile } = useSidebar();
+
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
       <SidebarMenu>
         {projects.map((item) => (
           <SidebarMenuItem key={item.name}>
-            <SidebarMenuButton render={<a href={item.url} />}>
-              {item.icon}
-              <span>{item.name}</span>
+            {/* CORREÇÃO: asChild + Link (SPA) */}
+            <SidebarMenuButton asChild>
+              <Link to={item.url}>
+                {item.icon}
+                <span>{item.name}</span>
+              </Link>
             </SidebarMenuButton>
+
             <DropdownMenu>
-              <DropdownMenuTrigger
-                render={
-                  <SidebarMenuAction
-                    showOnHover
-                    className="aria-expanded:bg-muted"
-                  />
-                }
-              >
-                <MoreHorizontalIcon />
-                <span className="sr-only">More</span>
+              {/* CORREÇÃO: asChild para renderizar o SidebarMenuAction corretamente */}
+              <DropdownMenuTrigger asChild>
+                <SidebarMenuAction
+                  showOnHover
+                  className="aria-expanded:bg-muted"
+                >
+                  <MoreHorizontalIcon />
+                  <span className="sr-only">More</span>
+                </SidebarMenuAction>
               </DropdownMenuTrigger>
+              
               <DropdownMenuContent
                 className="w-48"
                 side={isMobile ? "bottom" : "right"}
@@ -74,6 +79,7 @@ export function NavProjects({
             </DropdownMenu>
           </SidebarMenuItem>
         ))}
+        
         <SidebarMenuItem>
           <SidebarMenuButton>
             <MoreHorizontalIcon />
